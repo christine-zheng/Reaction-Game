@@ -27,7 +27,6 @@ export const getUserByToken = () => {
           authorization: userToken,
         },
       });
-      history.replace('/home');
       return dispatch(setAuth(data));
     }
   };

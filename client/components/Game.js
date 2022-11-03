@@ -71,11 +71,6 @@ export const Game = (props) => {
     }
   }
 
-  //   function goSeeResults() {
-  //     history.push('/stats')
-  //     history.go(1);
-  //   }
-
   // Clear the interval when the component unmounts
   useEffect(() => {
     return () => clearTimeout(timerRef.current);

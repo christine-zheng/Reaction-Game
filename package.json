@@ -1,7 +1,7 @@
 {
-  "name": "async-week-project",
+  "name": "reaction-game",
   "version": "1.0.0",
-  "description": "",
+  "description": "Users can play this game to test their reaction time.",
   "main": "index.js",
   "scripts": {
     "start-dev": "npm run build-watch & npm run start-server",

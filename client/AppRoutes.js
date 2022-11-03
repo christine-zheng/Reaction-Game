@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
+import Stats from './components/Stats';
 import { getUserByToken } from './store';
 
 /**
@@ -21,10 +22,11 @@ class AppRoutes extends React.Component {
       <div>
         {isLoggedIn ? (
           <Routes>
-            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Navigate replace to="/home" />} />
             <Route path="/signup" element={<Navigate replace to="/home" />} />
-            <Route path="/" element={<Navigate replace to="/home" />} />
+            <Route path="/" exact element={<Navigate replace to="/home" />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/stats" element={<Stats />} />
           </Routes>
         ) : (
           <Routes>

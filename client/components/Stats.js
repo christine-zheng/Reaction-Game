@@ -143,7 +143,6 @@ export const Stats = (props) => {
             </div>
           );
         })}
-        {/* <Chart type="bar" options={options} data={data} /> */}
       </main>
     );
   }

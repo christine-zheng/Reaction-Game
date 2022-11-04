@@ -4,6 +4,13 @@ body {
   color: white;
 }
 
+/*  Navbar */
+div#navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* links */
 nav a {
   display: inline-block;
@@ -25,12 +32,12 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-  color: rgb(217, 229, 251);
+  color: #e0fbf4;
 }
 
 /* selected link */
 a:active {
-  color: rgb(207, 222, 253);
+  color: #d4f0e8;
 }
 
 label {
@@ -43,10 +50,13 @@ form div {
 }
 
 main {
-  /* background-color: mintcream; */
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+main h1 {
+  margin-top: 50px;
 }
 
 section {
@@ -73,7 +83,6 @@ button#start-btn {
 
 .all-btns {
   background-color: #e0fbf4;
-  /* background-color: rgb(249, 137, 96); */
   border: 2px solid #422800;
   border-radius: 30px;
   box-shadow: #422800 4px 4px 0 0;
@@ -92,7 +101,7 @@ button#start-btn {
 }
 
 .all-btns:hover {
-  background-color: #fff;
+  background-color: white;
 }
 
 .all-btns:active {
@@ -109,6 +118,7 @@ button#start-btn {
 
 /* style for game's color box */
 .box {
+  cursor: pointer;
   width: 200px;
   height: 200px;
   border-radius: 5px;
@@ -117,6 +127,12 @@ button#start-btn {
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   margin-top: 15px;
   margin-bottom: 43px;
+  transition: transform 400ms;
+}
+
+.box:active {
+  /* Scale the box to 0.95 of its original size */
+  transform: scale(0.95);
 }
 
 .grey {
@@ -154,5 +170,5 @@ button#start-btn {
 /* Stats Page */
 div.stats {
   width: 75%;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }

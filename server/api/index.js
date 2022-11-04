@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-// matches all requests to /api/users
-router.use('/users', require('./users'));
+// matches all requests to /api/games
+router.use('/games', require('./games'));
 
 // matches all requests to  /api/puppies/
 // router.use('/puppies', require('./puppies'));

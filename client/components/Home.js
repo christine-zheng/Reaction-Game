@@ -15,9 +15,9 @@ export const Home = (props) => {
   if (!game) {
     return (
       <main>
-        <h1>Welcome, {username}</h1>
+        <h1>Welcome, {username.toUpperCase()}</h1>
         <p>Play to see your reaction time!</p>
-        <p>Click on the box when you see the color changes.</p>
+        <p id="instruction">Click on the box when you see the color changes.</p>
         <button
           type="button"
           id="start-btn"

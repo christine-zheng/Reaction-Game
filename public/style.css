@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Electrolize', sans-serif;
   background-color: black;
   color: white;
 }
@@ -40,6 +40,47 @@ a:active {
   color: #d4f0e8;
 }
 
+/* home page */
+p#instruction {
+  margin-top: 0;
+}
+
+/* form */
+div#auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90px;
+}
+
+#auth-form h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+#auth-form button {
+  font-size: 15px;
+  line-height: 38px;
+}
+
+#auth-form-error {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 7px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: lavender;
+  border-radius: 4px;
+  color: black;
+  width: 280px;
+  height: 375px;
+}
+
 label {
   display: block;
 }
@@ -49,6 +90,7 @@ form div {
   display: inline-block;
 }
 
+/* specific formatting for main & content */
 main {
   display: flex;
   flex-direction: column;
@@ -56,7 +98,11 @@ main {
 }
 
 main h1 {
-  margin-top: 50px;
+  margin-top: 40px;
+}
+
+h1#stats-heading {
+  margin-bottom: 30px;
 }
 
 section {
@@ -96,17 +142,22 @@ section#result {
 /* start button */
 button#start-btn {
   margin-top: 25px;
+  font-size: 18px;
+}
+
+#start-btn:hover {
+  background-color: white;
 }
 
 .all-btns {
+  font-family: 'Electrolize', sans-serif;
   background-color: #e0fbf4;
   border: 2px solid #422800;
-  border-radius: 30px;
+  border-radius: 23px;
   box-shadow: #422800 4px 4px 0 0;
-  color: #422800;
   cursor: pointer;
   display: inline-block;
-  font-weight: 600;
+  font-weight: 900;
   font-size: 16px;
   padding: 0 18px;
   line-height: 45px;
@@ -118,7 +169,7 @@ button#start-btn {
 }
 
 .all-btns:hover {
-  background-color: white;
+  background-color: #cbe9e0;
 }
 
 .all-btns:active {
@@ -188,4 +239,15 @@ button#start-btn {
 div.stats {
   width: 75%;
   margin-bottom: 50px;
+  font-size: 15px;
+}
+
+.stats p#best {
+  margin-top: 3px;
+  margin-bottom: 0;
+}
+
+.stats p#avg {
+  margin-top: 6px;
+  margin-bottom: 16px;
 }

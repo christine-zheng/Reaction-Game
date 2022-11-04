@@ -111,7 +111,7 @@ export const Game = (props) => {
 
   return (
     <main>
-      <h1>Hi, {username}</h1>
+      <h1>Hi, {username.toUpperCase()}</h1>
       {gameOver && !saved && (
         <section>
           <h4>Game Completed!</h4>

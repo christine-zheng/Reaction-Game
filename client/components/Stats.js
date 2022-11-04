@@ -55,7 +55,7 @@ export const options = {
       display: true,
       title: {
         display: true,
-        text: 'Reaction Time (seconds)',
+        text: 'Reaction (seconds)',
         color: 'white',
       },
       ticks: {
@@ -70,24 +70,11 @@ export const options = {
 
 const labels = ['1', '2', '3', '4', '5', '6', '7'];
 
-// const dummyData = [
-//   '0.339',
-//   '0.344',
-//   '0.319',
-//   '0.457',
-//   '0.486',
-//   '0.332',
-//   '0.423',
-// ];
-
 /**
  * COMPONENT
  */
 export const Stats = (props) => {
-  const [game, setGame] = useState(false);
   const { username, stats } = props;
-
-  console.log('stats: ', stats);
 
   useEffect(() => {
     props.fetchStats();
@@ -128,13 +115,12 @@ export const Stats = (props) => {
   } else {
     return (
       <main>
-        <h1>{username.toUpperCase()} STATS</h1>
+        <h1 id="stats-heading">{username.toUpperCase()} STATS</h1>
         {stats.map((info, index) => {
           return (
             <div key={info.id} className="stats">
-              <h3>Game #{index + 1}</h3>
-              <p>Best Time: {info.bestTime}s</p>
-              <p>Average Time: {info.avgTime}s</p>
+              <p id="best">Best: {info.bestTime}s</p>
+              <p id="avg">Average: {info.avgTime}s</p>
               <Chart
                 type="bar"
                 options={options}

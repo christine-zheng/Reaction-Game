@@ -76,6 +76,23 @@ section p {
   margin-bottom: 25px;
 }
 
+/* section for result when game ends */
+section#result {
+  color: #e0fbf4;
+}
+#result h4 {
+  margin-bottom: 7px;
+  margin-top: 15px;
+}
+
+#result p#bestTime {
+  margin-bottom: 0px;
+}
+
+#result p#avgTime {
+  margin-top: 5px;
+}
+
 /* start button */
 button#start-btn {
   margin-top: 25px;

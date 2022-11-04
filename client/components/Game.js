@@ -12,6 +12,7 @@ export const Game = (props) => {
 
   // state
   const [gameOver, setGameOver] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [colorIndex, setColorIndex] = useState(-1);
   const [enableClick, setEnableClick] = useState(false);
   const [startTime, setStartTime] = useState(new Date());
@@ -74,8 +75,8 @@ export const Game = (props) => {
     }
   }
 
-  function saveGameResults() {
-    // on user click, save the results
+  async function saveGameResults() {
+    // on user click, gather the results into gameInfo object
     const bestTime = Math.min(...results);
     const avgTime = Number(
       (
@@ -93,8 +94,14 @@ export const Game = (props) => {
     setGameInfo(gameInfo);
 
     console.log('gameInfo: ', gameInfo);
-    console.log('props: ', props);
-    props.saveGame(gameInfo);
+
+    // try to save the game (in database)
+    try {
+      await props.saveGame(gameInfo);
+      setSaved(true);
+    } catch (error) {
+      console.log('error saving the game at the moment. ', error);
+    }
   }
 
   // Clear the interval when the component unmounts
@@ -104,11 +111,18 @@ export const Game = (props) => {
 
   return (
     <main>
-      <h3>Hi, {username}</h3>
-      {gameOver && (
+      <h1>Hi, {username}</h1>
+      {gameOver && !saved && (
         <section>
           <h4>Game Completed!</h4>
-          <p>You can save your results or play again!</p>
+          <p>Click save to see results or play again!</p>
+        </section>
+      )}
+      {gameOver && saved && (
+        <section id="result">
+          <h4>~ Results ~</h4>
+          <p id="bestTime">Best: {gameInfo.bestTime}s</p>
+          <p id="avgTime">Average: {gameInfo.avgTime}s</p>
         </section>
       )}
       <div
@@ -123,7 +137,7 @@ export const Game = (props) => {
         Restart
       </button>
       <br />
-      {gameOver && (
+      {gameOver && !saved && (
         <button type="button" className="all-btns" onClick={saveGameResults}>
           Save Results
         </button>

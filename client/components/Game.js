@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import history from '../history';
+import { saveGame } from '../store';
 
 /**
  * COMPONENT
@@ -16,6 +16,7 @@ export const Game = (props) => {
   const [enableClick, setEnableClick] = useState(false);
   const [startTime, setStartTime] = useState(new Date());
   const [results, setResults] = useState([]);
+  const [gameInfo, setGameInfo] = useState({});
 
   // track reference to colorIndex
   const colorIndexRef = useRef(colorIndex);
@@ -49,7 +50,7 @@ export const Game = (props) => {
     // if not game over and click is enabled
     if (!gameOver && enableClick) {
       // calculate reaction time
-      const reactionTime = (clickTime - startTime) / 1000;
+      const reactionTime = Number(((clickTime - startTime) / 1000).toFixed(3));
       setResults([...results, reactionTime]);
 
       console.log('reaction time in seconds: ', reactionTime);
@@ -64,11 +65,36 @@ export const Game = (props) => {
         const time = new Date();
         setStartTime(time);
       }, generateWaitTime());
+
       console.log('i was clicked. color index: ', colorIndex);
+
       if (colorIndex === colors.length - 1) {
         setGameOver(true);
       }
     }
+  }
+
+  function saveGameResults() {
+    // on user click, save the results
+    const bestTime = Math.min(...results);
+    const avgTime = Number(
+      (
+        results.reduce((accum, val) => {
+          return accum + val;
+        }, 0) / results.length
+      ).toFixed(3)
+    );
+    const gameInfo = {
+      result: results,
+      bestTime,
+      avgTime,
+    };
+
+    setGameInfo(gameInfo);
+
+    console.log('gameInfo: ', gameInfo);
+    console.log('props: ', props);
+    props.saveGame(gameInfo);
   }
 
   // Clear the interval when the component unmounts
@@ -79,6 +105,12 @@ export const Game = (props) => {
   return (
     <main>
       <h3>Hi, {username}</h3>
+      {gameOver && (
+        <section>
+          <h4>Game Completed!</h4>
+          <p>You can save your results or play again!</p>
+        </section>
+      )}
       <div
         className={
           colorIndex === -1 || colorIndex >= colors.length
@@ -87,14 +119,14 @@ export const Game = (props) => {
         }
         onClick={handleClick}
       ></div>
-      <p>{results}</p>
-      <button type="button" onClick={() => history.go(0)}>
+      <button type="button" className="all-btns" onClick={() => history.go(0)}>
         Restart
       </button>
+      <br />
       {gameOver && (
-        <Link to="/stats">
-          <button type="button">See Results!</button>
-        </Link>
+        <button type="button" className="all-btns" onClick={saveGameResults}>
+          Save Results
+        </button>
       )}
     </main>
   );
@@ -106,4 +138,10 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(Game);
+const mapDispatch = (dispatch) => {
+  return {
+    saveGame: (gameInfo) => dispatch(saveGame(gameInfo)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(Game);

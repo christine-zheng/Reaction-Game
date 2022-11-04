@@ -18,7 +18,12 @@ export const Home = (props) => {
         <h1>Welcome, {username}</h1>
         <p>Play to see your reaction time!</p>
         <p>Click on the box when you see the color changes.</p>
-        <button type="button" onClick={() => setGame(true)}>
+        <button
+          type="button"
+          id="start-btn"
+          className="all-btns"
+          onClick={() => setGame(true)}
+        >
           Start Game!
         </button>
       </main>

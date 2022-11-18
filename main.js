@@ -2,6 +2,7 @@
 
 const { db } = require('./server/db');
 const app = require('./server');
+const seed = require('./script/seed');
 
 // this can be very useful if you deploy to Heroku!
 const PORT = process.env.PORT || 3000;
@@ -11,9 +12,25 @@ const PORT = process.env.PORT || 3000;
 // if you pass the force: true option to sync, that will drop all of your tables before re-creating them. Be sure to never do this in production!
 
 // sync database
-db.sync().then(() => {
-  console.log('db synced');
-  app.listen(PORT, () =>
-    console.log(`Your server is listening on port ${PORT}`)
-  );
-});
+// db.sync().then(() => {
+//   console.log('db synced');
+//   app.listen(PORT, () =>
+//     console.log(`Your server is listening on port ${PORT}`)
+//   );
+// });
+
+const init = async () => {
+  try {
+    if (process.env.SEED === 'true') {
+      await seed();
+    } else {
+      await db.sync();
+    }
+    // start listening (and create a 'server' object representing our server)
+    app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
+  } catch (ex) {
+    console.log(ex);
+  }
+};
+
+init();

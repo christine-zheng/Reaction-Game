@@ -237,7 +237,8 @@ button#start-btn {
 
 /* Stats Page */
 div.stats {
-  width: 75%;
+  width: 60%;
+  max-width: 531px;
   margin-bottom: 50px;
   font-size: 15px;
 }
@@ -250,4 +251,19 @@ div.stats {
 .stats p#avg {
   margin-top: 6px;
   margin-bottom: 16px;
+}
+
+/* parallax effect: images */
+img {
+  width: 30%;
+}
+
+.homePage {
+  text-align: center;
+}
+
+div#format-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

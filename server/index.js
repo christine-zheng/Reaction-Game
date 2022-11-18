@@ -1,43 +1,36 @@
-const express = require('express');
-const app = express();
-const morgan = require('morgan');
-const path = require('path');
+'use strict';
 
-// logging middleware
-app.use(morgan('dev'));
+const { db } = require('./db');
+const app = require('./app');
+const seed = require('../script/seed');
 
-// body parsing middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// this can be very useful if you deploy to Heroku!
+const PORT = process.env.PORT || 3000;
 
-// static middleware
-app.use(express.static(path.join(__dirname, '../public')));
+// if you update your db schemas, make sure you drop the tables first and then recreate them
 
-// auth and api routes
-app.use('/auth', require('./auth'));
-app.use('/api', require('./api'));
+// if you pass the force: true option to sync, that will drop all of your tables before re-creating them. Be sure to never do this in production!
 
-// any remaining requests with an extension (.js, .css, etc.) send 404
-app.use((req, res, next) => {
-  if (path.extname(req.path).length) {
-    const err = new Error('Not found');
-    err.status = 404;
-    next(err);
-  } else {
-    next();
+// sync database
+// db.sync().then(() => {
+//   console.log('db synced');
+//   app.listen(PORT, () =>
+//     console.log(`Your server is listening on port ${PORT}`)
+//   );
+// });
+
+const init = async () => {
+  try {
+    if (process.env.SEED === 'true') {
+      await seed();
+    } else {
+      await db.sync();
+    }
+    // start listening (and create a 'server' object representing our server)
+    app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
+  } catch (ex) {
+    console.log(ex);
   }
-});
+};
 
-// for any other request, send index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
-
-// error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err);
-  console.error(err.stack);
-  res.status(err.status || 500).send(err.message || 'Internal server error.');
-});
-
-module.exports = app;
+init();

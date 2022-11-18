@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start-dev": "npm run build-watch & npm run start-server",
-    "start-server": "JWT=shh nodemon main.js -e html,js,css --ignore public",
+    "start-server": "JWT=shh nodemon server -e html,js,css --ignore public",
     "build-watch": "webpack -w",
     "build": "webpack",
     "seed": "node script/seed.js",
-    "start": "node main",
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

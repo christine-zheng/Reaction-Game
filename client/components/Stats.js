@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { fetchStats } from '../store';
+import Leaderboard from './Leaderboard';
 
 // Framer Motion
 import { motion, AnimatePresence } from 'framer-motion';
@@ -18,7 +20,6 @@ import {
   BarController,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
-import { fetchStats } from '../store';
 
 ChartJS.register(
   LinearScale,
@@ -86,7 +87,7 @@ const tabs = [myStats, leaderboard];
  * COMPONENT
  */
 export const Stats = (props) => {
-  const { username, stats } = props;
+  const { stats } = props;
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
   useEffect(() => {
@@ -118,31 +119,8 @@ export const Stats = (props) => {
     return data;
   }
 
-  // if (stats.length === 0) {
-  //   return (
-  //     <main>
-  //       <h1>{username.toUpperCase()} STATS</h1>
-  //       <p>No stats to show yet. Play a game!</p>
-  //     </main>
-  //   );
-  // } else {
   return (
     <main>
-      {/* <h1 id="stats-heading">{username.toUpperCase()} STATS</h1> */}
-      {/* {stats.map((info, index) => {
-          return (
-            <div key={info.id} className="stats">
-              <p id="best">Best: {info.bestTime}s</p>
-              <p id="avg">Average: {info.avgTime}s</p>
-              <Chart
-                type="bar"
-                options={options}
-                data={chartData(info.result)}
-              />
-            </div>
-          );
-        })} */}
-
       <div className="window">
         <nav>
           <ul>
@@ -190,14 +168,13 @@ export const Stats = (props) => {
                     </div>
                   );
                 })}
-              {/* {selectedTab.label === 'Leaderboard' && } */}
+              {selectedTab.label === 'Leaderboard' && <Leaderboard />}
             </motion.div>
           </AnimatePresence>
         </section>
       </div>
     </main>
   );
-  // }
 };
 
 /**
@@ -205,7 +182,6 @@ export const Stats = (props) => {
  */
 const mapState = (state) => {
   return {
-    username: state.auth.username,
     stats: state.stats,
   };
 };

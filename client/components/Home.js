@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import Game from './Game';
 
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-// import moon from '/moon.png';
-// import land from '/land.png';
-// import cat from '../../public/cat.gif';
 
 /**
  * COMPONENT
@@ -28,23 +25,23 @@ export const Home = (props) => {
             speed={1}
             factor={2}
             style={{
-              backgroundImage: `url(/moon.png)`,
+              backgroundImage: 'url(/moon.png)',
               backgroundSize: 'cover',
             }}
           />
 
           <ParallaxLayer
             offset={2}
-            speed={1}
+            speed={0.7}
             factor={4}
             style={{
-              backgroundImage: `url(/land.png)`,
+              backgroundImage: 'url(/land.png)',
               backgroundSize: 'cover',
             }}
           />
 
           <ParallaxLayer
-            sticky={{ start: 0.9, end: 2.5 }}
+            sticky={{ start: 0.9, end: 2.4 }}
             style={{ textAlign: 'center' }}
           >
             <img src="/cat.gif" />
@@ -59,9 +56,9 @@ export const Home = (props) => {
           </ParallaxLayer>
 
           <ParallaxLayer
-            offset={3}
-            speed={2}
-            onClick={() => ref.current.scrollTo(3)}
+            offset={3.4}
+            speed={1.4}
+            onClick={() => ref.current.scrollTo(0)}
           >
             <div id="format-home">
               <p className="homePage">Play to see your reaction time!</p>

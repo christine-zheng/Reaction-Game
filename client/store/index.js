@@ -4,8 +4,9 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import auth from './auth';
 import stats from './stats';
+import leaderboard from './leaderboard';
 
-const reducer = combineReducers({ auth, stats });
+const reducer = combineReducers({ auth, stats, leaderboard });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
@@ -14,3 +15,4 @@ const store = createStore(reducer, middleware);
 export default store;
 export * from './auth';
 export * from './stats';
+export * from './leaderboard';

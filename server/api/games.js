@@ -52,10 +52,22 @@ router.post('/userStats', requireToken, async (req, res, next) => {
   }
 });
 
-// // matches PUT requests to /api/puppies/:puppyId
-// router.put('/:puppyId', function (req, res, next) { /* etc */});
-
-// // matches DELETE requests to /api/puppies/:puppyId
-// router.delete('/:puppyId', function (req, res, next) { /* etc */});
+// GET: /api/games/leaderboard
+router.get('/leaderboard', requireToken, async (req, res, next) => {
+  try {
+    const stats = await Game.findAll({
+      attributes: ['id', 'avgTime'],
+      include: {
+        model: User,
+        attributes: ['username'],
+      },
+      order: [['avgTime', 'ASC']],
+      limit: 15,
+    });
+    res.json(stats);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

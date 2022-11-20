@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
+// Framer Motion
+import { motion, AnimatePresence } from 'framer-motion';
+
 // imports for Chart.js
 import {
   Chart as ChartJS,
@@ -70,11 +73,21 @@ export const options = {
 
 const labels = ['1', '2', '3', '4', '5', '6', '7'];
 
+// tabs for Framer Motion animation
+const allStats = [
+  { icon: '📈', label: 'My Stats' },
+  { icon: '🏆', label: 'Leaderboard' },
+];
+
+const [myStats, leaderboard] = allStats;
+const tabs = [myStats, leaderboard];
+
 /**
  * COMPONENT
  */
 export const Stats = (props) => {
   const { username, stats } = props;
+  const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
   useEffect(() => {
     props.fetchStats();
@@ -105,18 +118,18 @@ export const Stats = (props) => {
     return data;
   }
 
-  if (stats.length === 0) {
-    return (
-      <main>
-        <h1>{username.toUpperCase()} STATS</h1>
-        <p>No stats to show yet. Play a game!</p>
-      </main>
-    );
-  } else {
-    return (
-      <main>
-        <h1 id="stats-heading">{username.toUpperCase()} STATS</h1>
-        {stats.map((info, index) => {
+  // if (stats.length === 0) {
+  //   return (
+  //     <main>
+  //       <h1>{username.toUpperCase()} STATS</h1>
+  //       <p>No stats to show yet. Play a game!</p>
+  //     </main>
+  //   );
+  // } else {
+  return (
+    <main>
+      {/* <h1 id="stats-heading">{username.toUpperCase()} STATS</h1> */}
+      {/* {stats.map((info, index) => {
           return (
             <div key={info.id} className="stats">
               <p id="best">Best: {info.bestTime}s</p>
@@ -128,10 +141,63 @@ export const Stats = (props) => {
               />
             </div>
           );
-        })}
-      </main>
-    );
-  }
+        })} */}
+
+      <div className="window">
+        <nav>
+          <ul>
+            {tabs.map((item) => (
+              <li
+                key={item.label}
+                className={item === selectedTab ? 'selected' : ''}
+                onClick={() => setSelectedTab(item)}
+              >
+                {`${item.icon} ${item.label}`}
+                {item === selectedTab ? (
+                  <motion.div className="underline" layoutId="underline" />
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <section>
+          <AnimatePresence exitBeforeEnter>
+            <motion.div
+              layoutScroll
+              style={{ overflow: 'auto' }}
+              key={selectedTab ? selectedTab.label : 'empty'}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -10, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              id="framer-layout"
+            >
+              {selectedTab.label === 'My Stats' && stats.length === 0 && (
+                <p>No stats to show yet. Play a game!</p>
+              )}
+              {selectedTab.label === 'My Stats' &&
+                stats.length > 0 &&
+                stats.map((info, index) => {
+                  return (
+                    <div key={info.id} className="stats">
+                      <p id="best">Best: {info.bestTime}s</p>
+                      <p id="avg">Average: {info.avgTime}s</p>
+                      <Chart
+                        type="bar"
+                        options={options}
+                        data={chartData(info.result)}
+                      />
+                    </div>
+                  );
+                })}
+              {/* {selectedTab.label === 'Leaderboard' && } */}
+            </motion.div>
+          </AnimatePresence>
+        </section>
+      </div>
+    </main>
+  );
+  // }
 };
 
 /**

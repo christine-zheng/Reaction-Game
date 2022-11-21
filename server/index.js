@@ -11,14 +11,6 @@ const PORT = process.env.PORT || 3000;
 
 // if you pass the force: true option to sync, that will drop all of your tables before re-creating them. Be sure to never do this in production!
 
-// sync database
-// db.sync().then(() => {
-//   console.log('db synced');
-//   app.listen(PORT, () =>
-//     console.log(`Your server is listening on port ${PORT}`)
-//   );
-// });
-
 const init = async () => {
   try {
     if (process.env.SEED === 'true') {

@@ -54,7 +54,6 @@ export const Game = (props) => {
       const reactionTime = Number(((clickTime - startTime) / 1000).toFixed(3));
       setResults([...results, reactionTime]);
 
-      console.log('reaction time in seconds: ', reactionTime);
       setEnableClick(false);
 
       // call setTimeout on user click/interaction
@@ -66,8 +65,6 @@ export const Game = (props) => {
         const time = new Date();
         setStartTime(time);
       }, generateWaitTime());
-
-      console.log('i was clicked. color index: ', colorIndex);
 
       if (colorIndex === colors.length - 1) {
         setGameOver(true);
@@ -92,8 +89,6 @@ export const Game = (props) => {
     };
 
     setGameInfo(gameInfo);
-
-    console.log('gameInfo: ', gameInfo);
 
     // try to save the game (in database)
     try {

@@ -43,8 +43,6 @@ router.post('/userStats', requireToken, async (req, res, next) => {
       const newGame = await Game.create(req.body);
       const results = await newGame.setUser(req.user.id);
 
-      console.log('saved game results - results: ', results);
-
       res.json(results);
     }
   } catch (error) {
